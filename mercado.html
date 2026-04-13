@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Carrito - La Buena Miga</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Carrito - La Buena Miga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body { font-family: Georgia, serif; background: #fdf6e3; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 20px; }
+    .item { background: #fffaf0; padding: 15px; margin-bottom: 12px; border-radius: 10px; }
+    .total { font-size: 1.4rem; margin-top: 20px; text-align: center; }
+    button { padding: 10px 16px; border: none; background: #d2a35c; color: white; border-radius: 8px; cursor: pointer; }
+  </style>
 </head>
 
 <body>
-    <nav class="nav">
-        <a href="index.html">Inicio</a>
-        <a href="index.html#catalogo">Catálogo</a>
-        <a href="mercado.html">Carrito 🛒</a>
-    </nav>
 
-    <h1>Tu carrito</h1>
+  <h1>Tu carrito</h1>
 
-    <main class="mercado">
-        <div id="lista-carrito"></div>
-        <p id="total"></p>
+  <div id="lista"></div>
+  <p class="total" id="total"></p>
 
-        <button id="btn-vaciar">Vaciar carrito</button>
-        <button id="btn-whatsapp">Enviar pedido por WhatsApp</button>
-    </main>
+  <button id="btn-whatsapp">Enviar pedido por WhatsApp</button>
 
-    <script src="carrito.js"></script>
+  <script src="carrito.js"></script>
 </body>
 </html>
