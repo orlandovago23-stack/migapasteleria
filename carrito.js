@@ -13,6 +13,7 @@ function actualizarContadores() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  // BOTONES PARA AGREGAR AL CARRITO
   document.querySelectorAll(".btn-add-cart").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.id;
@@ -26,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   actualizarContadores();
 
+  // SI ESTAMOS EN carrito.html
   const lista = document.getElementById("lista");
   const totalEl = document.getElementById("total");
 
@@ -44,12 +46,13 @@ function renderCarrito(contenedor, totalEl) {
 
   Object.keys(carrito).forEach(id => {
     const cantidad = carrito[id];
+
     const div = document.createElement("div");
     div.classList.add("item");
     div.textContent = `${id} — Cantidad: ${cantidad}`;
     contenedor.appendChild(div);
 
-    total += cantidad * 1; // si querés precios reales, los agrego
+    total += cantidad * 1; // Si querés precios reales, te lo agrego luego
   });
 
   totalEl.textContent = `Total: ${total}`;
