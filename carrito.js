@@ -1,3 +1,5 @@
+// carrito.js
+
 let carrito = JSON.parse(localStorage.getItem("carrito")) || {};
 
 function guardar() {
@@ -7,16 +9,20 @@ function guardar() {
 function actualizarContadores() {
   Object.keys(carrito).forEach(id => {
     const span = document.getElementById("count-" + id);
-    if (span) span.textContent = carrito[id];
+    if (span) {
+      span.textContent = carrito[id];
+    }
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Botones "Agregar al carrito" en index.html
+  const botonesAgregar = document.querySelectorAll(".btn-add-cart");
 
-  // BOTONES PARA AGREGAR AL CARRITO
-  document.querySelectorAll(".btn-add-cart").forEach(btn => {
+  botonesAgregar.forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.id;
+      if (!id) return;
 
       carrito[id] = (carrito[id] || 0) + 1;
 
@@ -25,19 +31,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Actualizar contadores al cargar cualquier página
   actualizarContadores();
 
-  // SI ESTAMOS EN carrito.html
+  // Si estamos en carrito.html, renderizar el carrito
   const lista = document.getElementById("lista");
   const totalEl = document.getElementById("total");
 
-  if (lista) renderCarrito(lista, totalEl);
+  if (lista && totalEl) {
+    renderCarrito(lista, totalEl);
+  }
 
+  // Botón de WhatsApp en carrito.html
   const btnW = document.getElementById("btn-whatsapp");
-  if (btnW) btnW.onclick = () => {
-    const msg = generarMensaje();
-    window.open(`https://wa.me/50558300624?text=${encodeURIComponent(msg)}`);
-  };
+  if (btnW) {
+    btnW.addEventListener("click", () => {
+      const msg = generarMensaje();
+      const url = "https://wa.me/50558300624?text=" + encodeURIComponent(msg);
+      window.open(url, "_blank");
+    });
+  }
 });
 
 function renderCarrito(contenedor, totalEl) {
@@ -52,10 +65,10 @@ function renderCarrito(contenedor, totalEl) {
     div.textContent = `${id} — Cantidad: ${cantidad}`;
     contenedor.appendChild(div);
 
-    total += cantidad * 1; // Si querés precios reales, te lo agrego luego
+    total += cantidad * 1; // aquí solo sumamos unidades
   });
 
-  totalEl.textContent = `Total: ${total}`;
+  totalEl.textContent = `Total de productos: ${total}`;
 }
 
 function generarMensaje() {
