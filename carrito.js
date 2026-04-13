@@ -16,13 +16,16 @@ function actualizarContadores() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Botones "Agregar al carrito" en index.html
-  const botonesAgregar = document.querySelectorAll(".btn-add-cart");
 
-  botonesAgregar.forEach(btn => {
+  // Botones para agregar al carrito
+  const botones = document.querySelectorAll(".btn-add-cart");
+
+  botones.forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.id;
-      if (!id) return;
+
+      // Evita errores si el id está vacío
+      if (!id || typeof id !== "string") return;
 
       carrito[id] = (carrito[id] || 0) + 1;
 
@@ -31,10 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Actualizar contadores al cargar cualquier página
   actualizarContadores();
 
-  // Si estamos en carrito.html, renderizar el carrito
+  // Si estamos en carrito.html
   const lista = document.getElementById("lista");
   const totalEl = document.getElementById("total");
 
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCarrito(lista, totalEl);
   }
 
-  // Botón de WhatsApp en carrito.html
+  // Botón de WhatsApp
   const btnW = document.getElementById("btn-whatsapp");
   if (btnW) {
     btnW.addEventListener("click", () => {
@@ -65,7 +67,7 @@ function renderCarrito(contenedor, totalEl) {
     div.textContent = `${id} — Cantidad: ${cantidad}`;
     contenedor.appendChild(div);
 
-    total += cantidad * 1; // aquí solo sumamos unidades
+    total += cantidad;
   });
 
   totalEl.textContent = `Total de productos: ${total}`;
