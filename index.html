@@ -15,11 +15,21 @@
       --radius-card: 18px;
     }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Georgia, serif;
       background: var(--bg-main);
       color: var(--text-main);
-      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     header {
@@ -69,6 +79,7 @@
       width: 100%;
       height: 220px;
       object-fit: cover;
+      display: block;
     }
 
     .no-image {
@@ -78,7 +89,7 @@
       align-items: center;
       background: #e8dcc2;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #7a5a3a;
     }
 
@@ -91,6 +102,7 @@
       align-items: center;
       gap: 10px;
       margin-top: 12px;
+      flex-wrap: wrap;
     }
 
     .btn-add-cart {
@@ -109,6 +121,25 @@
       padding: 3px 8px;
       border-radius: 8px;
       font-size: 0.8rem;
+    }
+
+    .btn-card {
+      border: 1px solid var(--accent);
+      background: transparent;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    /* Marca de agua sencilla */
+    .watermark {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      font-size: 0.8rem;
+      color: rgba(0,0,0,0.35);
+      pointer-events: none;
     }
   </style>
 </head>
@@ -131,307 +162,409 @@
 </section>
 
 <section id="catalogo">
-  <div class="productos-grid">
+  <div class="productos-grid" id="productosGrid">
 
-    <!-- ⭐ 1. RED VELVET -->
-    <article class="card" data-id="red-velvet">
+    <!-- PASTELES -->
+    <article class="card" data-category="pasteles especiales" data-id="red-velvet">
       <div class="card-img">
-        <img src="red-velvet-libra.jpeg" />
+        <img src="red-velvet-libra.jpeg" alt="Pastel Red Velvet" />
       </div>
       <div class="card-body">
-        <h3>Red Velvet</h3>
-        <p>Bizcocho suave y aterciopelado con frosting de queso crema.</p>
-        <p>4 oz C$600 • Media libra C$900 • 1 libra C$1400</p>
-
+        <span class="card-category">Pastel</span>
+        <h3 class="card-title">Red Velvet</h3>
+        <p class="card-desc">Bizcocho suave y aterciopelado con un toque de cacao y frosting de queso crema.</p>
+        <p class="card-price">4 oz C$600 • Media libra C$900 • 1 libra C$1400</p>
         <div class="card-footer">
+          <span class="tag">Clásico</span>
+
           <button class="btn-add-cart" data-id="red-velvet">🛒</button>
           <span class="cart-count" id="count-red-velvet">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Red Velvet">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 2. TIRAMISÚ -->
-    <article class="card" data-id="tiramisu">
+    <article class="card" data-category="postres" data-id="tiramisu">
       <div class="card-img">
-        <img src="tiramisu.jpeg" />
+        <img src="tiramisu.jpeg" alt="Tiramisú" />
       </div>
       <div class="card-body">
-        <h3>Tiramisú</h3>
-        <p>Postre italiano con café, crema suave y cacao.</p>
-        <p>C$70</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Tiramisú</h3>
+        <p class="card-desc">Postre italiano con café, crema suave y cacao.</p>
+        <p class="card-price">C$70</p>
         <div class="card-footer">
+          <span class="tag">Favorito</span>
+
           <button class="btn-add-cart" data-id="tiramisu">🛒</button>
           <span class="cart-count" id="count-tiramisu">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Tiramisú">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 3. MINI PIE DE LIMÓN -->
-    <article class="card" data-id="mini-pie-limon">
+    <article class="card" data-category="postres" data-id="mini-pie-limon">
       <div class="card-img">
-        <img src="pie-de-limon-pequeño.jpeg" />
+        <img src="pie-de-limon-pequeño.jpeg" alt="Mini Pie de Limón" />
       </div>
       <div class="card-body">
-        <h3>Mini Pie de Limón</h3>
-        <p>Relleno cítrico con base crujiente y topping cremoso.</p>
-        <p>C$70</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Mini Pie de Limón</h3>
+        <p class="card-desc">Relleno cítrico con base crujiente y topping cremoso.</p>
+        <p class="card-price">C$70</p>
         <div class="card-footer">
+          <span class="tag">Refrescante</span>
+
           <button class="btn-add-cart" data-id="mini-pie-limon">🛒</button>
           <span class="cart-count" id="count-mini-pie-limon">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Mini Pie de Limón">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 4. CAJA DE BROWNIES -->
-    <article class="card" data-id="caja-brownies">
+    <article class="card" data-category="postres especiales" data-id="caja-brownies">
       <div class="card-img">
-        <img src="caja-de-brownies.jpeg" />
+        <img src="caja-de-brownies.jpeg" alt="Caja de Brownies" />
       </div>
       <div class="card-body">
-        <h3>Caja de Brownies</h3>
-        <p>Brownies intensos de chocolate, suaves por dentro.</p>
-        <p>C$650</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Caja de Brownies</h3>
+        <p class="card-desc">Brownies intensos de chocolate, suaves por dentro.</p>
+        <p class="card-price">C$650</p>
         <div class="card-footer">
+          <span class="tag">Para compartir</span>
+
           <button class="btn-add-cart" data-id="caja-brownies">🛒</button>
           <span class="cart-count" id="count-caja-brownies">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Caja de Brownies">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 5. CHOCOFLAN -->
-    <article class="card" data-id="chocoflan">
+    <article class="card" data-category="postres" data-id="chocoflan">
       <div class="card-img">
-        <img src="chocoflan.jpeg" />
+        <img src="chocoflan.jpeg" alt="Chocoflan" />
       </div>
       <div class="card-body">
-        <h3>Chocoflan</h3>
-        <p>Combinación perfecta de flan y pastel de chocolate.</p>
-        <p>C$500</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Chocoflan</h3>
+        <p class="card-desc">Combinación perfecta de flan y pastel de chocolate.</p>
+        <p class="card-price">C$500</p>
         <div class="card-footer">
+          <span class="tag">Doble sabor</span>
+
           <button class="btn-add-cart" data-id="chocoflan">🛒</button>
           <span class="cart-count" id="count-chocoflan">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Chocoflan">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 6. MINI CHOCOFLAN -->
-    <article class="card" data-id="mini-chocoflan">
+    <article class="card" data-category="postres" data-id="mini-chocoflan">
       <div class="card-img">
-        <img src="mini-chocoflan.jpeg" />
+        <img src="mini-chocoflan.jpeg" alt="Mini Chocoflan" />
       </div>
       <div class="card-body">
-        <h3>Mini Chocoflan</h3>
-        <p>Versión individual del clásico chocoflan.</p>
-        <p>C$50</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Mini Chocoflan</h3>
+        <p class="card-desc">Versión individual del clásico chocoflan.</p>
+        <p class="card-price">C$50</p>
         <div class="card-footer">
+          <span class="tag">Individual</span>
+
           <button class="btn-add-cart" data-id="mini-chocoflan">🛒</button>
           <span class="cart-count" id="count-mini-chocoflan">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Mini Chocoflan">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 7. FLAN TRADICIONAL -->
-    <article class="card" data-id="flan-tradicional">
+    <article class="card" data-category="postres" data-id="flan-tradicional">
       <div class="card-img">
-        <img src="flan-tradicional.jpeg" />
+        <img src="flan-tradicional.jpeg" alt="Flan Tradicional" />
       </div>
       <div class="card-body">
-        <h3>Flan Tradicional</h3>
-        <p>Textura cremosa con caramelo suave.</p>
-        <p>C$500</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Flan Tradicional</h3>
+        <p class="card-desc">Textura cremosa con caramelo suave.</p>
+        <p class="card-price">C$500</p>
         <div class="card-footer">
+          <span class="tag">Clásico</span>
+
           <button class="btn-add-cart" data-id="flan-tradicional">🛒</button>
           <span class="cart-count" id="count-flan-tradicional">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Flan Tradicional">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 8. PASTEL RECTANGULAR -->
-    <article class="card" data-id="pastel-rectangular">
+    <article class="card" data-category="pasteles" data-id="pastel-rectangular">
       <div class="card-img">
-        <img src="pastel-rectangular.jpeg" />
+        <img src="pastel-rectangular.jpeg" alt="Pastel Rectangular" />
       </div>
       <div class="card-body">
-        <h3>Pastel Rectangular</h3>
-        <p>Perfecto para eventos, disponible en vainilla o chocolate.</p>
-        <p>C$1500</p>
-
+        <span class="card-category">Pastel</span>
+        <h3 class="card-title">Pastel Rectangular</h3>
+        <p class="card-desc">Perfecto para eventos, disponible en vainilla o chocolate.</p>
+        <p class="card-price">C$1500</p>
         <div class="card-footer">
+          <span class="tag">Eventos</span>
+
           <button class="btn-add-cart" data-id="pastel-rectangular">🛒</button>
           <span class="cart-count" id="count-pastel-rectangular">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Pastel Rectangular">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 9. BESO DE ÁNGEL -->
-    <article class="card" data-id="beso-angel">
+    <article class="card" data-category="pasteles especiales" data-id="beso-angel">
       <div class="card-img">
-        <img src="beso-de-angel-media-libra.jpeg" />
+        <img src="beso-de-angel-media-libra.jpeg" alt="Beso de Ángel" />
       </div>
       <div class="card-body">
-        <h3>Beso de Ángel</h3>
-        <p>Pastel estrella, suave y delicado.</p>
-        <p>Media libra C$600 • 3 libras C$1000</p>
-
+        <span class="card-category">Pastel</span>
+        <h3 class="card-title">Beso de Ángel</h3>
+        <p class="card-desc">Nuestro pastel estrella, suave, delicado y perfecto para ocasiones especiales.</p>
+        <p class="card-price">Media libra C$600 • 3 libras C$1000</p>
         <div class="card-footer">
+          <span class="tag">Estrella</span>
+
           <button class="btn-add-cart" data-id="beso-angel">🛒</button>
           <span class="cart-count" id="count-beso-angel">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Beso de Ángel">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 10. RED VELVET 4 OZ -->
-    <article class="card" data-id="red-velvet-4oz">
+    <article class="card" data-category="postres" data-id="red-velvet-4oz">
       <div class="card-img">
-        <img src="red-velvet-4onzas.jpeg" />
+        <img src="red-velvet-4onzas.jpeg" alt="Red Velvet 4 oz" />
       </div>
       <div class="card-body">
-        <h3>Red Velvet (4 oz)</h3>
-        <p>Versión individual del clásico Red Velvet.</p>
-        <p>C$600</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Red Velvet (4 oz)</h3>
+        <p class="card-desc">Versión individual de nuestro clásico Red Velvet, ideal para antojos personales.</p>
+        <p class="card-price">C$600</p>
         <div class="card-footer">
+          <span class="tag">Individual</span>
+
           <button class="btn-add-cart" data-id="red-velvet-4oz">🛒</button>
           <span class="cart-count" id="count-red-velvet-4oz">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Red Velvet (4 oz)">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 11. FLAN TRADICIONAL 4 OZ -->
-    <article class="card" data-id="flan-4oz">
+    <article class="card" data-category="postres" data-id="flan-4oz">
       <div class="card-img">
-        <img src="flan-tradicional.jpeg" />
+        <img src="flan-tradicional.jpeg" alt="Flan Tradicional 4 oz" />
       </div>
       <div class="card-body">
-        <h3>Flan Tradicional (4 oz)</h3>
-        <p>Textura suave y cremosa.</p>
-        <p>C$500</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Flan Tradicional (4 oz)</h3>
+        <p class="card-desc">Textura suave y cremosa con caramelo artesanal en cada bocado.</p>
+        <p class="card-price">C$500</p>
         <div class="card-footer">
+          <span class="tag">Individual</span>
+
           <button class="btn-add-cart" data-id="flan-4oz">🛒</button>
           <span class="cart-count" id="count-flan-4oz">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Flan Tradicional (4 oz)">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 12. PASTEL DE CUMPLEAÑOS -->
-    <article class="card" data-id="pastel-cumple">
+    <article class="card" data-category="pasteles" data-id="pastel-cumple">
       <div class="card-img">
-        <img src="pastel-de-dos-pisos.jpeg" />
+        <img src="pastel-de-dos-pisos.jpeg" alt="Pastel de Cumpleaños" />
       </div>
       <div class="card-body">
-        <h3>Pastel de Cumpleaños</h3>
-        <p>Personalizado para tus celebraciones.</p>
-        <p>Desde C$400</p>
-
+        <span class="card-category">Pastel</span>
+        <h3 class="card-title">Pastel de Cumpleaños</h3>
+        <p class="card-desc">Personalizado para tus celebraciones, con diseños únicos y sabores deliciosos.</p>
+        <p class="card-price">Desde C$400</p>
         <div class="card-footer">
+          <span class="tag">Personalizable</span>
+
           <button class="btn-add-cart" data-id="pastel-cumple">🛒</button>
           <span class="cart-count" id="count-pastel-cumple">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Pastel de Cumpleaños">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 13. TRES LECHES -->
-    <article class="card" data-id="tres-leches">
+    <article class="card" data-category="postres especiales" data-id="tres-leches">
       <div class="card-img">
-        <img src="tres-leches-5onzas.jpeg" />
+        <img src="tres-leches-5onzas.jpeg" alt="Tres leches en vaso 5 oz" />
       </div>
       <div class="card-body">
-        <h3>Tres leches en vaso (5 oz)</h3>
-        <p>Postre tres leches en porción individual.</p>
-        <p>C$50</p>
-
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Tres leches en vaso (5 oz)</h3>
+        <p class="card-desc">Postre tres leches en porción individual, cremoso y listo para disfrutar.</p>
+        <p class="card-price">C$50</p>
         <div class="card-footer">
+          <span class="tag">Nuevo</span>
+
           <button class="btn-add-cart" data-id="tres-leches">🛒</button>
           <span class="cart-count" id="count-tres-leches">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Tres leches en vaso (5 oz)">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 14. PAN BRIOCHE -->
-    <article class="card" data-id="pan-brioche">
+    <!-- PANES Y OTROS -->
+    <article class="card" data-category="panes" data-id="pan-brioche">
       <div class="card-img">
-        <img src="pan-brioche.jpeg" />
+        <img src="pan-brioche.jpeg" alt="Pan Brioche" />
       </div>
       <div class="card-body">
-        <h3>Pan Brioche</h3>
-        <p>Pan suave y ligeramente dulce.</p>
-        <p>C$100</p>
-
+        <span class="card-category">Pan</span>
+        <h3 class="card-title">Pan Brioche</h3>
+        <p class="card-desc">Pan suave y ligeramente dulce, perfecto para desayunos y meriendas.</p>
+        <p class="card-price">C$100</p>
         <div class="card-footer">
+          <span class="tag">Dulce</span>
+
           <button class="btn-add-cart" data-id="pan-brioche">🛒</button>
           <span class="cart-count" id="count-pan-brioche">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Pan Brioche">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 15. PAN DE MIGA (PRÓXIMAMENTE) -->
-    <article class="card" data-id="pan-miga">
-      <div class="no-image">PRÓXIMAMENTE</div>
-      <div class="card-body">
-        <h3>Pan de Miga Suave</h3>
-        <p>C$100 (12 unidades)</p>
-
+    <article class="card" data-category="panes" data-id="pan-miga">
+      <div class="card-body no-image">
+        <div class="proximamente">
+          <span>Pan de Miga Suave<br>C$100 (12 unidades)</span>
+        </div>
         <div class="card-footer">
           <button class="btn-add-cart" data-id="pan-miga">🛒</button>
           <span class="cart-count" id="count-pan-miga">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Pan de Miga Suave">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 16. BAGUETTE Y CIABATTA (PRÓXIMAMENTE) -->
-    <article class="card" data-id="baguette-ciabatta">
-      <div class="no-image">PRÓXIMAMENTE</div>
-      <div class="card-body">
-        <h3>Baguette y Ciabatta</h3>
-        <p>C$40 - C$80</p>
-
+    <article class="card" data-category="panes" data-id="baguette-ciabatta">
+      <div class="card-body no-image">
+        <div class="proximamente">
+          <span>Baguette y Ciabatta<br>C$40 - C$80</span>
+        </div>
         <div class="card-footer">
           <button class="btn-add-cart" data-id="baguette-ciabatta">🛒</button>
           <span class="cart-count" id="count-baguette-ciabatta">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Baguette y Ciabatta">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 17. BERLINESAS (PRÓXIMAMENTE) -->
-    <article class="card" data-id="berlinesas">
-      <div class="no-image">PRÓXIMAMENTE</div>
-      <div class="card-body">
-        <h3>Berlinesas</h3>
-        <p>C$300 (10 unidades)</p>
-
+    <article class="card" data-category="panes" data-id="berlinesas">
+      <div class="card-body no-image">
+        <div class="proximamente">
+          <span>Berlinesas<br>C$300 (10 unidades)</span>
+        </div>
         <div class="card-footer">
           <button class="btn-add-cart" data-id="berlinesas">🛒</button>
           <span class="cart-count" id="count-berlinesas">0</span>
-          <button class="btn-card">Pedir por WhatsApp</button>
+
+          <button class="btn-card" data-producto="Berlinesas">
+            Pedir por WhatsApp
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- ⭐ 18. ALFAJORES -->
-    <article class="card" data-id="alfajores">
+    <article class="card" data-category="postres" data-id="alfajores">
       <div class="card-img">
-        <img src="alfajores-personalizados.jpeg" />
-      </div
+        <img src="alfajores-personalizados.jpeg" alt="Alfajores" />
+      </div>
+      <div class="card-body">
+        <span class="card-category">Postre</span>
+        <h3 class="card-title">Alfajores</h3>
+        <p class="card-desc">Delicadas galletas rellenas, perfectas para regalar o disfrutar.</p>
+        <p class="card-price">C$200 (6 unidades)</p>
+        <div class="card-footer">
+          <span class="tag">Detalle</span>
+
+          <button class="btn-add-cart" data-id="alfajores">🛒</button>
+          <span class="cart-count" id="count-alfajores">0</span>
+
+          <button class="btn-card" data-producto="Alfajores">
+            Pedir por WhatsApp
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-category="postres" data-id="roles-canela">
+      <div class="card-body no-image">
+        <div class="proximamente">
+          <span>Roles de Canela<br>C$200 (6 unidades)</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-add-cart" data-id="roles-canela">🛒</button>
+          <span class="cart-count" id="count-roles-canela">0</span>
+
+          <button class="btn-card" data-producto="Roles de Canela">
+            Pedir por WhatsApp
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="watermark">La Buena Miga</div>
+
+<script src="carrito.js"></script>
+</body>
+</html>
