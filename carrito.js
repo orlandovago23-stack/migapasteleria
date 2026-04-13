@@ -1,33 +1,62 @@
 // carrito.js
 
+// CARRITO EN LOCALSTORAGE
 let carrito = JSON.parse(localStorage.getItem("carrito")) || {};
 
+// GUARDAR CARRITO
 function guardar() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
+// ACTUALIZAR CONTADORES EN LAS TARJETAS
 function actualizarContadores() {
   Object.keys(carrito).forEach(id => {
     const span = document.getElementById("count-" + id);
-    if (span) {
-      span.textContent = carrito[id];
-    }
+    if (span) span.textContent = carrito[id];
   });
+}
+
+// ACTUALIZAR SELECTOR DE CANTIDAD
+function actualizarCantidad(id, nuevaCantidad) {
+  const num = document.getElementById("cant-" + id);
+  if (num) num.textContent = nuevaCantidad;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Botones para agregar al carrito
-  const botones = document.querySelectorAll(".btn-add-cart");
+  // BOTONES + Y –
+  document.querySelectorAll(".mas").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const num = document.getElementById("cant-" + id);
+      let cantidad = parseInt(num.textContent);
+      cantidad++;
+      num.textContent = cantidad;
+    });
+  });
 
-  botones.forEach(btn => {
+  document.querySelectorAll(".menos").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const num = document.getElementById("cant-" + id);
+      let cantidad = parseInt(num.textContent);
+      if (cantidad > 1) cantidad--;
+      num.textContent = cantidad;
+    });
+  });
+
+  // BOTÓN AGREGAR AL CARRITO
+  document.querySelectorAll(".btn-add-cart").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.id;
 
-      // Evita errores si el id está vacío
-      if (!id || typeof id !== "string") return;
+      // CANTIDAD SELECCIONADA
+      const cantidadSeleccionada = parseInt(
+        document.getElementById("cant-" + id).textContent
+      );
 
-      carrito[id] = (carrito[id] || 0) + 1;
+      // SUMAR AL CARRITO
+      carrito[id] = (carrito[id] || 0) + cantidadSeleccionada;
 
       guardar();
       actualizarContadores();
@@ -36,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   actualizarContadores();
 
-  // Si estamos en carrito.html
+  // SI ESTAMOS EN carrito.html
   const lista = document.getElementById("lista");
   const totalEl = document.getElementById("total");
 
@@ -44,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCarrito(lista, totalEl);
   }
 
-  // Botón de WhatsApp
+  // BOTÓN WHATSAPP
   const btnW = document.getElementById("btn-whatsapp");
   if (btnW) {
     btnW.addEventListener("click", () => {
@@ -55,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// MOSTRAR CARRITO EN carrito.html
 function renderCarrito(contenedor, totalEl) {
   contenedor.innerHTML = "";
   let total = 0;
@@ -73,6 +103,7 @@ function renderCarrito(contenedor, totalEl) {
   totalEl.textContent = `Total de productos: ${total}`;
 }
 
+// MENSAJE PARA WHATSAPP
 function generarMensaje() {
   let msg = "Hola, quiero hacer un pedido:%0A%0A";
 
