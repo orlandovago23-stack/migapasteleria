@@ -4,12 +4,48 @@
     <meta charset="UTF-8">
     <title>La Buena Miga - Catálogo</title>
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* --- SLIDER --- */
+        .slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slider img {
+            width: 100%;
+            display: none;
+        }
+
+        .slider img.active {
+            display: block;
+        }
+
+        .slider .flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            user-select: none;
+        }
+
+        .slider .flecha.izq { left: 10px; }
+        .slider .flecha.der { right: 10px; }
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="nav">
             <a href="index.html">Inicio</a>
-            <a href="index.html#catalogo">Catálogo</a>
+            <a href="#catalogo">Catálogo</a>
             <a href="mercado.html">Carrito 🛒</a>
         </nav>
         <h1>La Buena Miga</h1>
@@ -17,16 +53,27 @@
     </header>
 
     <main id="catalogo" class="catalogo">
-        <!-- Red Velvet -->
+
+        <!-- ⭐ RED VELVET CON SLIDER AUTOMÁTICO -->
         <article class="card" data-category="pasteles">
             <div class="card-img">
-                <img src="img/red-velvet.jpeg" alt="Pastel Red Velvet">
+
+                <div class="slider" data-slider="red-velvet">
+                    <span class="flecha izq" data-dir="izq">❮</span>
+                    <span class="flecha der" data-dir="der">❯</span>
+
+                    <img src="red-velvet-libra.jpeg" class="active">
+                    <img src="red-velvet-4onzas.jpeg">
+                </div>
+
             </div>
+
             <div class="card-body">
                 <span class="card-category">Pastel</span>
                 <h3 class="card-title">Pastel Red Velvet</h3>
                 <p class="card-desc">Bizcocho rojo suave con frosting de queso crema.</p>
                 <p class="card-price">4 oz • C$600</p>
+
                 <div class="card-footer">
                     <span class="tag">Clásico</span>
                     <button class="btn-carrito" data-id="red-velvet">🛒</button>
@@ -35,16 +82,18 @@
             </div>
         </article>
 
-        <!-- Tiramisú -->
+        <!-- ⭐ TIRAMISÚ -->
         <article class="card" data-category="postres">
             <div class="card-img">
-                <img src="img/tiramisu.jpeg" alt="Postre Tiramisú">
+                <img src="tiramisu.jpeg" alt="Tiramisú">
             </div>
+
             <div class="card-body">
                 <span class="card-category">Postre</span>
                 <h3 class="card-title">Postre Tiramisú</h3>
                 <p class="card-desc">Capas de café, crema suave y cacao espolvoreado.</p>
                 <p class="card-price">C$70</p>
+
                 <div class="card-footer">
                     <span class="tag">Favorito</span>
                     <button class="btn-carrito" data-id="tiramisu">🛒</button>
@@ -53,16 +102,18 @@
             </div>
         </article>
 
-        <!-- Mini Pie de Limón -->
+        <!-- ⭐ MINI PIE DE LIMÓN -->
         <article class="card" data-category="postres">
             <div class="card-img">
-                <img src="img/mini-pie-limon.jpeg" alt="Mini Pie de Limón">
+                <img src="pie-de-limon-pequeño.jpeg" alt="Mini Pie de Limón">
             </div>
+
             <div class="card-body">
                 <span class="card-category">Postre</span>
                 <h3 class="card-title">Mini Pie de Limón</h3>
                 <p class="card-desc">Relleno cítrico con base crujiente y topping cremoso.</p>
                 <p class="card-price">C$70</p>
+
                 <div class="card-footer">
                     <span class="tag">Refrescante</span>
                     <button class="btn-carrito" data-id="mini-pie-limon">🛒</button>
@@ -71,16 +122,18 @@
             </div>
         </article>
 
-        <!-- Caja de Brownies -->
+        <!-- ⭐ CAJA DE BROWNIES -->
         <article class="card" data-category="postres">
             <div class="card-img">
-                <img src="img/caja-brownies.jpeg" alt="Caja de Brownies">
+                <img src="caja-de-brownies.jpeg" alt="Caja de Brownies">
             </div>
+
             <div class="card-body">
                 <span class="card-category">Postre</span>
                 <h3 class="card-title">Caja de Brownies</h3>
                 <p class="card-desc">Brownies de chocolate intensos, suaves por dentro.</p>
                 <p class="card-price">C$650</p>
+
                 <div class="card-footer">
                     <span class="tag">Para compartir</span>
                     <button class="btn-carrito" data-id="caja-brownies">🛒</button>
@@ -88,8 +141,38 @@
                 </div>
             </div>
         </article>
+
     </main>
 
     <script src="carrito.js"></script>
+
+    <script>
+        /* --- SLIDER AUTOMÁTICO + FLECHAS --- */
+        document.querySelectorAll(".slider").forEach(slider => {
+            let index = 0;
+            const imgs = slider.querySelectorAll("img");
+
+            function show(n) {
+                imgs.forEach(img => img.classList.remove("active"));
+                imgs[n].classList.add("active");
+            }
+
+            slider.querySelector(".flecha.izq").onclick = () => {
+                index = (index - 1 + imgs.length) % imgs.length;
+                show(index);
+            };
+
+            slider.querySelector(".flecha.der").onclick = () => {
+                index = (index + 1) % imgs.length;
+                show(index);
+            };
+
+            setInterval(() => {
+                index = (index + 1) % imgs.length;
+                show(index);
+            }, 3000);
+        });
+    </script>
+
 </body>
 </html>
