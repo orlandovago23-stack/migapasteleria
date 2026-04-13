@@ -1,126 +1,67 @@
-const productos = {
-    "red-velvet": {
-        id: "red-velvet",
-        nombre: "Pastel Red Velvet",
-        precio: 600,
-        descripcion: "Porción individual de 4 oz, bizcocho rojo suave con frosting de queso crema."
-    },
-    "tiramisu": {
-        id: "tiramisu",
-        nombre: "Postre Tiramisú",
-        precio: 70,
-        descripcion: "Postre italiano con café, crema suave y cacao espolvoreado."
-    },
-    "mini-pie-limon": {
-        id: "mini-pie-limon",
-        nombre: "Mini Pie de Limón",
-        precio: 70,
-        descripcion: "Relleno cítrico con base crujiente y topping cremoso."
-    },
-    "caja-brownies": {
-        id: "caja-brownies",
-        nombre: "Caja de Brownies",
-        precio: 650,
-        descripcion: "Brownies de chocolate intensos, suaves por dentro."
-    }
-};
-
 let carrito = JSON.parse(localStorage.getItem("carrito")) || {};
 
 function guardar() {
-    localStorage.setItem("carrito", JSON.stringify(carrito));
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
 function actualizarContadores() {
-    Object.keys(productos).forEach(id => {
-        const span = document.getElementById("cant-" + id);
-        if (span) span.textContent = carrito[id]?.cantidad || 0;
-    });
+  Object.keys(carrito).forEach(id => {
+    const span = document.getElementById("count-" + id);
+    if (span) span.textContent = carrito[id];
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const botones = document.querySelectorAll(".btn-carrito");
-    botones.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const id = btn.dataset.id;
+  document.querySelectorAll(".btn-add-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
 
-            if (!carrito[id]) carrito[id] = { ...productos[id], cantidad: 1 };
-            else carrito[id].cantidad++;
+      carrito[id] = (carrito[id] || 0) + 1;
 
-            guardar();
-            actualizarContadores();
-        });
+      guardar();
+      actualizarContadores();
     });
+  });
 
-    actualizarContadores();
+  actualizarContadores();
 
-    const lista = document.getElementById("lista-carrito");
-    const totalEl = document.getElementById("total");
+  const lista = document.getElementById("lista");
+  const totalEl = document.getElementById("total");
 
-    if (lista) renderCarrito(lista, totalEl);
+  if (lista) renderCarrito(lista, totalEl);
 
-    const btnVaciar = document.getElementById("btn-vaciar");
-    if (btnVaciar) btnVaciar.onclick = () => {
-        carrito = {};
-        guardar();
-        renderCarrito(lista, totalEl);
-    };
-
-    const btnW = document.getElementById("btn-whatsapp");
-    if (btnW) btnW.onclick = () => {
-        const msg = generarMensaje();
-        if (!msg) return;
-        const tel = "50558300624";
-        window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`);
-    };
+  const btnW = document.getElementById("btn-whatsapp");
+  if (btnW) btnW.onclick = () => {
+    const msg = generarMensaje();
+    window.open(`https://wa.me/50558300624?text=${encodeURIComponent(msg)}`);
+  };
 });
 
 function renderCarrito(contenedor, totalEl) {
-    contenedor.innerHTML = "";
-    let total = 0;
+  contenedor.innerHTML = "";
+  let total = 0;
 
-    const ids = Object.keys(carrito);
-    if (ids.length === 0) {
-        contenedor.innerHTML = "<p>Tu carrito está vacío.</p>";
-        totalEl.textContent = "";
-        return;
-    }
+  Object.keys(carrito).forEach(id => {
+    const cantidad = carrito[id];
+    const div = document.createElement("div");
+    div.classList.add("item");
+    div.textContent = `${id} — Cantidad: ${cantidad}`;
+    contenedor.appendChild(div);
 
-    ids.forEach(id => {
-        const p = carrito[id];
-        const sub = p.precio * p.cantidad;
-        total += sub;
+    total += cantidad * 1; // si querés precios reales, los agrego
+  });
 
-        const div = document.createElement("div");
-        div.classList.add("item-carrito");
-        div.innerHTML = `
-            <h3>${p.nombre}</h3>
-            <p>${p.descripcion}</p>
-            <p>Cantidad: ${p.cantidad}</p>
-            <p>Subtotal: C$${sub}</p>
-        `;
-        contenedor.appendChild(div);
-    });
-
-    totalEl.textContent = `Total: C$${total}`;
+  totalEl.textContent = `Total: ${total}`;
 }
 
 function generarMensaje() {
-    const ids = Object.keys(carrito);
-    if (ids.length === 0) {
-        alert("Tu carrito está vacío.");
-        return "";
-    }
+  let msg = "Hola, quiero hacer un pedido:%0A%0A";
 
-    let msg = "Hola, quiero hacer un pedido:%0A%0A";
+  Object.keys(carrito).forEach(id => {
+    msg += `• ${carrito[id]} x ${id}%0A`;
+  });
 
-    ids.forEach(id => {
-        const p = carrito[id];
-        msg += `• ${p.cantidad} x ${p.nombre} (C$${p.precio} c/u)%0A`;
-    });
-
-    msg += "%0AGracias.";
-
-    return decodeURIComponent(msg);
+  msg += "%0AGracias.";
+  return msg;
 }
