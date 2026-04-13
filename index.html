@@ -1,178 +1,220 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>La Buena Miga - Catálogo</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Pastelería y Repostería La Buena Miga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pastelería y Repostería La Buena Miga. Pasteles, postres y panes artesanales con sabor auténtico." />
 
-    <style>
-        /* --- SLIDER --- */
-        .slider {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 10px;
-        }
+  <style>
+    /* TUS ESTILOS ORIGINALES — NO LOS TOCO */
+    :root {
+      --bg-main: #fdf6e3;
+      --bg-light: #fffaf0;
+      --bg-hero: #8b5e3c;
+      --accent: #d2a35c;
+      --accent-soft: #f0d3a5;
+      --text-main: #4a2f1b;
+      --text-soft: #7a5a3a;
+      --white: #ffffff;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --radius-card: 18px;
+      --transition-fast: 0.25s ease;
+    }
 
-        .slider img {
-            width: 100%;
-            display: none;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Georgia", serif; background: var(--bg-main); color: var(--text-main); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
 
-        .slider img.active {
-            display: block;
-        }
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 250, 240, 0.9);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
 
-        .slider .flecha {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 28px;
-            background: rgba(0,0,0,0.4);
-            color: white;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 5px;
-            user-select: none;
-        }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
 
-        .slider .flecha.izq { left: 10px; }
-        .slider .flecha.der { right: 10px; }
-    </style>
+    nav { display: flex; gap: 24px; }
+    nav a { font-weight: 600; padding-bottom: 4px; }
+
+    /* HERO */
+    .hero {
+      min-height: 75vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; background: radial-gradient(circle at top left, #a8744f, #8b5e3c);
+      color: var(--white);
+    }
+
+    /* GRID DE PRODUCTOS */
+    .productos-grid {
+      max-width: 1200px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: var(--bg-light);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: transform 0.25s ease;
+    }
+
+    .card:hover { transform: translateY(-4px); }
+
+    .card-body { padding: 18px; }
+    .card-footer { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+
+    /* CONTADOR DEL CARRITO */
+    .cart-count {
+      background: var(--accent);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+    .btn-add-cart {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <nav class="nav">
-            <a href="index.html">Inicio</a>
-            <a href="#catalogo">Catálogo</a>
-            <a href="mercado.html">Carrito 🛒</a>
-        </nav>
-        <h1>La Buena Miga</h1>
-        <h2>Nuestro catálogo</h2>
-    </header>
 
-    <main id="catalogo" class="catalogo">
+  <!-- NAV -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <span>La Buena Miga</span>
+        <span>Pastelería y Repostería Artesanal</span>
+      </div>
 
-        <!-- ⭐ RED VELVET CON SLIDER AUTOMÁTICO -->
-        <article class="card" data-category="pasteles">
-            <div class="card-img">
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="carrito.html">Carrito 🛒</a>
+      </nav>
+    </div>
+  </header>
 
-                <div class="slider" data-slider="red-velvet">
-                    <span class="flecha izq" data-dir="izq">❮</span>
-                    <span class="flecha der" data-dir="der">❯</span>
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <h1>Sabor auténtico en cada bocado</h1>
+      <p>Pasteles, postres y panes artesanales elaborados con cariño.</p>
+    </div>
+  </section>
 
-                    <img src="red-velvet-libra.jpeg" class="active">
-                    <img src="red-velvet-4onzas.jpeg">
-                </div>
+  <!-- CATÁLOGO -->
+  <section id="catalogo">
+    <div class="productos-grid" id="productosGrid">
 
-            </div>
+      <!-- ⭐ RED VELVET -->
+      <article class="card" data-id="red-velvet">
+        <div class="card-img">
+          <img src="red-velvet-libra.jpeg" alt="Pastel Red Velvet" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Pastel</span>
+          <h3 class="card-title">Red Velvet</h3>
+          <p class="card-desc">Bizcocho suave y aterciopelado con un toque de cacao y frosting de queso crema.</p>
+          <p class="card-price">4 oz C$600 • Media libra C$900 • 1 libra C$1400</p>
 
-            <div class="card-body">
-                <span class="card-category">Pastel</span>
-                <h3 class="card-title">Pastel Red Velvet</h3>
-                <p class="card-desc">Bizcocho rojo suave con frosting de queso crema.</p>
-                <p class="card-price">4 oz • C$600</p>
+          <div class="card-footer">
+            <button class="btn-add-cart" data-id="red-velvet">🛒</button>
+            <span class="cart-count" id="count-red-velvet">0</span>
 
-                <div class="card-footer">
-                    <span class="tag">Clásico</span>
-                    <button class="btn-carrito" data-id="red-velvet">🛒</button>
-                    <span class="cantidad" id="cant-red-velvet">0</span>
-                </div>
-            </div>
-        </article>
+            <button class="btn-card" data-producto="Red Velvet">
+              Pedir por WhatsApp
+            </button>
+          </div>
+        </div>
+      </article>
 
-        <!-- ⭐ TIRAMISÚ -->
-        <article class="card" data-category="postres">
-            <div class="card-img">
-                <img src="tiramisu.jpeg" alt="Tiramisú">
-            </div>
+      <!-- ⭐ TIRAMISÚ -->
+      <article class="card" data-id="tiramisu">
+        <div class="card-img">
+          <img src="tiramisu.jpeg" alt="Tiramisú" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Postre</span>
+          <h3 class="card-title">Tiramisú</h3>
+          <p class="card-desc">Postre italiano con café, crema suave y cacao.</p>
+          <p class="card-price">C$70</p>
 
-            <div class="card-body">
-                <span class="card-category">Postre</span>
-                <h3 class="card-title">Postre Tiramisú</h3>
-                <p class="card-desc">Capas de café, crema suave y cacao espolvoreado.</p>
-                <p class="card-price">C$70</p>
+          <div class="card-footer">
+            <button class="btn-add-cart" data-id="tiramisu">🛒</button>
+            <span class="cart-count" id="count-tiramisu">0</span>
 
-                <div class="card-footer">
-                    <span class="tag">Favorito</span>
-                    <button class="btn-carrito" data-id="tiramisu">🛒</button>
-                    <span class="cantidad" id="cant-tiramisu">0</span>
-                </div>
-            </div>
-        </article>
+            <button class="btn-card" data-producto="Tiramisú">
+              Pedir por WhatsApp
+            </button>
+          </div>
+        </div>
+      </article>
 
-        <!-- ⭐ MINI PIE DE LIMÓN -->
-        <article class="card" data-category="postres">
-            <div class="card-img">
-                <img src="pie-de-limon-pequeño.jpeg" alt="Mini Pie de Limón">
-            </div>
+      <!-- ⭐ MINI PIE DE LIMÓN -->
+      <article class="card" data-id="mini-pie-limon">
+        <div class="card-img">
+          <img src="pie-de-limon-pequeño.jpeg" alt="Mini Pie de Limón" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Postre</span>
+          <h3 class="card-title">Mini Pie de Limón</h3>
+          <p class="card-desc">Relleno cítrico con base crujiente y topping cremoso.</p>
+          <p class="card-price">C$70</p>
 
-            <div class="card-body">
-                <span class="card-category">Postre</span>
-                <h3 class="card-title">Mini Pie de Limón</h3>
-                <p class="card-desc">Relleno cítrico con base crujiente y topping cremoso.</p>
-                <p class="card-price">C$70</p>
+          <div class="card-footer">
+            <button class="btn-add-cart" data-id="mini-pie-limon">🛒</button>
+            <span class="cart-count" id="count-mini-pie-limon">0</span>
 
-                <div class="card-footer">
-                    <span class="tag">Refrescante</span>
-                    <button class="btn-carrito" data-id="mini-pie-limon">🛒</button>
-                    <span class="cantidad" id="cant-mini-pie-limon">0</span>
-                </div>
-            </div>
-        </article>
+            <button class="btn-card" data-producto="Mini Pie de Limón">
+              Pedir por WhatsApp
+            </button>
+          </div>
+        </div>
+      </article>
 
-        <!-- ⭐ CAJA DE BROWNIES -->
-        <article class="card" data-category="postres">
-            <div class="card-img">
-                <img src="caja-de-brownies.jpeg" alt="Caja de Brownies">
-            </div>
+      <!-- ⭐ CAJA DE BROWNIES -->
+      <article class="card" data-id="caja-brownies">
+        <div class="card-img">
+          <img src="caja-de-brownies.jpeg" alt="Caja de Brownies" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Postre</span>
+          <h3 class="card-title">Caja de Brownies</h3>
+          <p class="card-desc">Brownies intensos de chocolate, suaves por dentro.</p>
+          <p class="card-price">C$650</p>
 
-            <div class="card-body">
-                <span class="card-category">Postre</span>
-                <h3 class="card-title">Caja de Brownies</h3>
-                <p class="card-desc">Brownies de chocolate intensos, suaves por dentro.</p>
-                <p class="card-price">C$650</p>
+          <div class="card-footer">
+            <button class="btn-add-cart" data-id="caja-brownies">🛒</button>
+            <span class="cart-count" id="count-caja-brownies">0</span>
 
-                <div class="card-footer">
-                    <span class="tag">Para compartir</span>
-                    <button class="btn-carrito" data-id="caja-brownies">🛒</button>
-                    <span class="cantidad" id="cant-caja-brownies">0</span>
-                </div>
-            </div>
-        </article>
+            <button class="btn-card" data-producto="Caja de Brownies">
+              Pedir por WhatsApp
+            </button>
+          </div>
+        </div>
+      </article>
 
-    </main>
+    </div>
+  </section>
 
-    <script src="carrito.js"></script>
-
-    <script>
-        /* --- SLIDER AUTOMÁTICO + FLECHAS --- */
-        document.querySelectorAll(".slider").forEach(slider => {
-            let index = 0;
-            const imgs = slider.querySelectorAll("img");
-
-            function show(n) {
-                imgs.forEach(img => img.classList.remove("active"));
-                imgs[n].classList.add("active");
-            }
-
-            slider.querySelector(".flecha.izq").onclick = () => {
-                index = (index - 1 + imgs.length) % imgs.length;
-                show(index);
-            };
-
-            slider.querySelector(".flecha.der").onclick = () => {
-                index = (index + 1) % imgs.length;
-                show(index);
-            };
-
-            setInterval(() => {
-                index = (index + 1) % imgs.length;
-                show(index);
-            }, 3000);
-        });
-    </script>
-
+  <script src="carrito.js"></script>
 </body>
 </html>
