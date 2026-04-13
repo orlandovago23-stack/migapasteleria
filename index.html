@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pastelería y Repostería La Buena Miga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pastelería y Repostería La Buena Miga. Pasteles, postres y panes artesanales con sabor auténtico." />
+
+  <style>
+    :root {
+      --bg-main: #fdf6e3;
+      --bg-light: #fffaf0;
+      --bg-hero: #8b5e3c;
+      --accent: #d2a35c;
+      --accent-soft: #f0d3a5;
+      --text-main: #4a2f1b;
+      --text-soft: #7a5a3a;
+      --white: #ffffff;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --radius-card: 18px;
+      --transition-fast: 0.25s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Georgia", serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* HEADER / NAV */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 250, 240, 0.9);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand span:first-child {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .brand span:last-child {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      position: relative;
+      padding-bottom: 4px;
+      transition: color var(--transition-fast);
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition-fast);
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* NAV MOBILE */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 22px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: var(--bg-light);
+        border-radius: 12px;
+        box-shadow: var(--shadow-soft);
+        padding: 12px 18px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: all var(--transition-fast);
+      }
+
+      nav.nav-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* SOBRE NOSOTROS PANEL */
+    .about-trigger {
+      position: relative;
+    }
+
+    .about-panel {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      width: 280px;
+      background: var(--bg-light);
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: all var(--transition-fast);
+      z-index: 150;
+    }
+
+    .about-panel h4 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .about-panel p {
+      margin-bottom: 6px;
+    }
+
+    .about-panel .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .about-panel .badge {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--bg-main);
+      border: 1px solid var(--accent-soft);
+    }
+
+    .about-trigger:hover .about-panel {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .about-panel {
+        position: fixed;
+        top: auto;
+        bottom: 70px;
+        right: 16px;
+        width: 80%;
+      }
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at top left, #a8744f, #8b5e3c);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("marca-de-agua.jpeg") center/contain no-repeat;
+      opacity: 0.08;
+      transform: scale(1.2);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      bottom: -160px;
+      left: -80px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-subtitle {
+      letter-spacing: 3px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: #fbe3c7;
+    }
+
+    .hero-title {
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-text {
+      font-size: 1rem;
+      color: #fbe3c7;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--text-main);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
+      background: #e0b26a;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 60px 20px;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .section-header p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filter-btn {
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      background: var(--bg-light);
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    /* PRODUCT GRID */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .productos-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .productos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 540px) {
+      .productos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: rgba(255, 250, 240, 0.9);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent 40%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.16);
+      background: #fff7e6;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-img {
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover .card-img img {
+      transform: scale(1.06);
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .card-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .card-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 4px;
+      color: var(--text-main);
+    }
+
+    .card-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #fbe3c7;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-card {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .btn-card:hover {
+      background: #e0b26a;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    /* CARD SIN IMAGEN - PRÓXIMAMENTE */
+    .card.no-image {
+      justify-content: center;
+      align-items: center;
+      padding: 30px 16px;
+    }
+
+    .card.no-image .proximamente {
+      position: relative;
+      width: 100%;
+      padding: 30px 10px;
+      border-radius: 12px;
+      border: 1px dashed rgba(139, 94, 60, 0.4);
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      overflow: hidden;
+    }
+
+    .card.no-image .proximamente::before {
+      content: "PRÓXIMAMENTE";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: rgba(74, 47, 27, 0.8);
+      background: linear-gradient(
+        135deg,
+        rgba(253, 246, 227, 0.9),
+        rgba(240, 211, 165, 0.9)
+      );
+      transform: rotate(-12deg) translateY(0);
+      pointer-events: none;
+    }
+
+    .card.no-image .proximamente span {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* CONTACT / PEDIDOS */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-info p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .contact-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+
+    .contact-list li {
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    .contact-list span {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .contact-note {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .contact-card {
+      background: var(--bg-light);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .contact-card small {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #3b2414;
+      color: #fbe3c7;
+      padding: 30px 20px 18px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 30px;
+      font-size: 0.85rem;
+    }
+
+    .footer-inner h4 {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #fdf6e3;
+    }
+
+    .footer-inner p,
+    .footer-inner li {
+      color: #fbe3c7;
+    }
+
+    .footer-inner ul {
+      list-style: none;
+    }
+
+    .footer-inner li {
+      margin-bottom: 4px;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 16px auto 0;
+      font-size: 0.75rem;
+      color: #fbe3c7;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(251, 227, 199, 0.3);
+      padding-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* WHATSAPP FLOATING BUTTON */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .whatsapp-tooltip {
+      background: var(--bg-light);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      box-shadow: var(--shadow-soft);
+      opacity: 0;
+      transform: translateX(10px);
+      pointer-events: none;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .whatsapp-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 26px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .whatsapp-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      opacity: 0;
+      transform: scale(0.7);
+      transition: all 0.4s ease;
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp-btn:hover::after {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.06);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .whatsapp-btn.pulse {
+      animation: pulse 1.6s infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER / NAV -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <span>La Buena Miga</span>
+        <span>Pastelería y Repostería Artesanal</span>
+      </div>
+
+      <nav id="mainNav">
+        <a href="#inicio">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <span class="about-trigger">
+          <a href="javascript:void(0)">Sobre nosotros</a>
+          <div class="about-panel">
+            <h4>Sobre La Buena Miga</h4>
+            <p>
+              Horneamos cada día con dedicación, respetando el tiempo de cada masa y el detalle de cada decoración.
+            </p>
+            <p>
+              Creemos en una pastelería cercana, cálida y honesta: lo que ves en nuestras fotos es lo que llega a tu mesa.
+            </p>
+            <div class="badge-row">
+              <span class="badge">Producción artesanal</span>
+              <span class="badge">Recetas cuidadas</span>
+              <span class="badge">Pedidos personalizados</span>
+            </div>
+          </div>
+        </span>
+        <a href="#pedidos">Pedidos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <p class="hero-subtitle">PASTELERÍA Y REPOSTERÍA LA BUENA MIGA</p>
+      <h1 class="hero-title">Sabor auténtico en cada bocado</h1>
+      <p class="hero-text">
+        Pasteles, postres y panes artesanales elaborados con ingredientes seleccionados y el cariño de una cocina casera.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-scroll="#catalogo">Ver catálogo</button>
+        <button class="btn btn-outline" data-scroll="#pedidos">Hacer un encargo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Nuestro catálogo</h2>
+        <p>Explora nuestros pasteles, postres y panes. Algunos productos estarán disponibles próximamente.</p>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="pasteles">Pasteles</button>
+        <button class="filter-btn" data-filter="postres">Postres</button>
+        <button class="filter-btn" data-filter="panes">Panes</button>
+        <button class="filter-btn" data-filter="especiales">Especiales</button>
+      </div>
+
+      <div class="productos-grid" id="productosGrid">
+        <!-- PASTELES -->
+        <article class="card" data-category="pasteles especiales">
+          <div class="card-img">
+            <img src="red-velvet-libra.jpeg" alt="Pastel Red Velvet" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Pastel</span>
+            <h3 class="card-title">Red Velvet</h3>
+            <p class="card-desc">Bizcocho suave y aterciopelado con un toque de cacao y frosting de queso crema.</p>
+            <p class="card-price">4 oz C$600 • Media libra C$900 • 1 libra C$1400</p>
+            <div class="card-footer">
+              <span class="tag">Clásico</span>
+              <button class="btn-card" data-producto="Red Velvet">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="tiramisu.jpeg" alt="Tiramisú" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Tiramisú</h3>
+            <p class="card-desc">Postre italiano con café, crema suave y cacao.</p>
+            <p class="card-price">C$70</p>
+            <div class="card-footer">
+              <span class="tag">Favorito</span>
+              <button class="btn-card" data-producto="Tiramisú">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="pie-de-limon-pequeño.jpeg" alt="Mini Pie de Limón" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Mini Pie de Limón</h3>
+            <p class="card-desc">Relleno cítrico con base crujiente y topping cremoso.</p>
+            <p class="card-price">C$70</p>
+            <div class="card-footer">
+              <span class="tag">Refrescante</span>
+              <button class="btn-card" data-producto="Mini Pie de Limón">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres especiales">
+          <div class="card-img">
+            <img src="caja-de-brownies.jpeg" alt="Caja de Brownies" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Caja de Brownies</h3>
+            <p class="card-desc">Brownies intensos de chocolate, suaves por dentro.</p>
+            <p class="card-price">C$650</p>
+            <div class="card-footer">
+              <span class="tag">Para compartir</span>
+              <button class="btn-card" data-producto="Caja de Brownies">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="chocoflan.jpeg" alt="Chocoflan" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Chocoflan</h3>
+            <p class="card-desc">Combinación perfecta de flan y pastel de chocolate.</p>
+            <p class="card-price">C$500</p>
+            <div class="card-footer">
+              <span class="tag">Doble sabor</span>
+              <button class="btn-card" data-producto="Chocoflan">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="mini-chocoflan.jpeg" alt="Mini Chocoflan" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Mini Chocoflan</h3>
+            <p class="card-desc">Versión individual del clásico chocoflan.</p>
+            <p class="card-price">C$50</p>
+            <div class="card-footer">
+              <span class="tag">Individual</span>
+              <button class="btn-card" data-producto="Mini Chocoflan">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="flan-tradicional.jpeg" alt="Flan Tradicional" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Flan Tradicional</h3>
+            <p class="card-desc">Textura cremosa con caramelo suave.</p>
+            <p class="card-price">C$500</p>
+            <div class="card-footer">
+              <span class="tag">Clásico</span>
+              <button class="btn-card" data-producto="Flan Tradicional">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="pasteles">
+          <div class="card-img">
+            <img src="pastel-rectangular.jpeg" alt="Pastel Rectangular" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Pastel</span>
+            <h3 class="card-title">Pastel Rectangular</h3>
+            <p class="card-desc">Perfecto para eventos, disponible en vainilla o chocolate.</p>
+            <p class="card-price">C$1500</p>
+            <div class="card-footer">
+              <span class="tag">Eventos</span>
+              <button class="btn-card" data-producto="Pastel Rectangular">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="pasteles especiales">
+          <div class="card-img">
+            <img src="beso-de-angel-media-libra.jpeg" alt="Beso de Ángel" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Pastel</span>
+            <h3 class="card-title">Beso de Ángel</h3>
+            <p class="card-desc">Nuestro pastel estrella, suave, delicado y perfecto para ocasiones especiales.</p>
+            <p class="card-price">Media libra C$600 • 3 libras C$1000</p>
+            <div class="card-footer">
+              <span class="tag">Estrella</span>
+              <button class="btn-card" data-producto="Beso de Ángel">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="red-velvet-4onzas.jpeg" alt="Red Velvet 4 oz" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Red Velvet (4 oz)</h3>
+            <p class="card-desc">Versión individual de nuestro clásico Red Velvet, ideal para antojos personales.</p>
+            <p class="card-price">C$600</p>
+            <div class="card-footer">
+              <span class="tag">Individual</span>
+              <button class="btn-card" data-producto="Red Velvet (4 oz)">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="flan-tradicional.jpeg" alt="Flan Tradicional 4 oz" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Flan Tradicional (4 oz)</h3>
+            <p class="card-desc">Textura suave y cremosa con caramelo artesanal en cada bocado.</p>
+            <p class="card-price">C$500</p>
+            <div class="card-footer">
+              <span class="tag">Individual</span>
+              <button class="btn-card" data-producto="Flan Tradicional (4 oz)">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="pasteles">
+          <div class="card-img">
+            <img src="pastel-de-dos-pisos.jpeg" alt="Pastel de Cumpleaños" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Pastel</span>
+            <h3 class="card-title">Pastel de Cumpleaños</h3>
+            <p class="card-desc">Personalizado para tus celebraciones, con diseños únicos y sabores deliciosos.</p>
+            <p class="card-price">Desde C$400</p>
+            <div class="card-footer">
+              <span class="tag">Personalizable</span>
+              <button class="btn-card" data-producto="Pastel de Cumpleaños">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- NUEVO PRODUCTO: TRES LECHES -->
+        <article class="card" data-category="postres especiales">
+          <div class="card-img">
+            <img src="tres-leches-5onzas.jpeg" alt="Tres leches en vaso 5 oz" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Tres leches en vaso (5 oz)</h3>
+            <p class="card-desc">Postre tres leches en porción individual, cremoso y listo para disfrutar.</p>
+            <p class="card-price">C$50</p>
+            <div class="card-footer">
+              <span class="tag">Nuevo</span>
+              <button class="btn-card" data-producto="Tres leches en vaso (5 oz)">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANES Y OTROS -->
+        <article class="card" data-category="panes">
+          <div class="card-img">
+            <img src="pan-brioche.jpeg" alt="Pan Brioche" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Pan</span>
+            <h3 class="card-title">Pan Brioche</h3>
+            <p class="card-desc">Pan suave y ligeramente dulce, perfecto para desayunos y meriendas.</p>
+            <p class="card-price">C$100</p>
+            <div class="card-footer">
+              <span class="tag">Dulce</span>
+              <button class="btn-card" data-producto="Pan Brioche">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="panes">
+          <div class="card-body no-image">
+            <div class="proximamente">
+              <span>Pan de Miga Suave<br>C$100 (12 unidades)</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="panes">
+          <div class="card-body no-image">
+            <div class="proximamente">
+              <span>Baguette y Ciabatta<br>C$40 - C$80</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="panes">
+          <div class="card-body no-image">
+            <div class="proximamente">
+              <span>Berlinesas<br>C$300 (10 unidades)</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-img">
+            <img src="alfajores-personalizados.jpeg" alt="Alfajores" />
+          </div>
+          <div class="card-body">
+            <span class="card-category">Postre</span>
+            <h3 class="card-title">Alfajores</h3>
+            <p class="card-desc">Delicadas galletas rellenas, perfectas para regalar o disfrutar.</p>
+            <p class="card-price">C$200 (6 unidades)</p>
+            <div class="card-footer">
+              <span class="tag">Detalle</span>
+              <button class="btn-card" data-producto="Alfajores">
+                Pedir por WhatsApp
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-category="postres">
+          <div class="card-body no-image">
+            <div class="proximamente">
+              <span>Roles de Canela<br>C$200 (6 unidades)</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEDIDOS / CONTACTO -->
+  <section id="pedidos">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Pedidos y encargos</h2>
+        <p>Haz tu pedido con anticipación para asegurar disponibilidad y personalización.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>
+            Para encargos especiales (cumpleaños, eventos, mesas dulces o pedidos grandes), te recomendamos escribirnos por
+            WhatsApp con al menos <strong>48 horas de anticipación</strong>.
+          </p>
+          <ul class="contact-list">
+            <li><span>WhatsApp:</span> +505 5830 0624</li>
+            <li><span>Ubicación:</span> Managua, Nicaragua</li>
+          </ul>
+          <p class="contact-note">
+            Cuéntanos qué necesitas: tipo de producto, cantidad, fecha y si tienes alguna referencia de diseño o decoración.
+          </p>
+        </div>
+
+        <div class="contact-card" id="contacto">
+          <h3>Mensaje sugerido para tu pedido</h3>
+          <p>
+            Puedes usar este mensaje como base al escribirnos por WhatsApp. Solo ajusta los detalles a tu gusto.
+          </p>
+          <p><strong>Ejemplo:</strong></p>
+          <p>
+            “Hola, me gustaría hacer un pedido en La Buena Miga. Estoy interesado en el producto
+            <em>[nombre del producto]</em> para la fecha <em>[día/mes]</em>. ¿Podrían confirmarme disponibilidad y precio
+            final, por favor?”
+          </p>
+          <small>Al hacer clic en los botones de “Pedir por WhatsApp” el mensaje se llenará automáticamente con el nombre del producto.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h4>La Buena Miga</h4>
+        <p>Pastelería y repostería artesanal con enfoque en calidad, detalle y sabor auténtico.</p>
+      </div>
+      <div>
+        <h4>Enlaces</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#pedidos">Pedidos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <p>WhatsApp: +505 5830 0624</p>
+        <p>Managua, Nicaragua</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> La Buena Miga. Todos los derechos reservados.</span>
+      <span>migapasteleria.com</span>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <div class="whatsapp-float">
+    <div class="whatsapp-tooltip">Haz tu pedido por WhatsApp</div>
+    <div class="whatsapp-btn pulse" id="whatsappMain" aria-label="Contactar por WhatsApp">
+      💬
+    </div>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = "50558300624";
+
+    // NAV MOBILE
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+
+    navToggle.addEventListener("click", () => {
+      mainNav.classList.toggle("nav-open");
+    });
+
+    mainNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mainNav.classList.remove("nav-open");
+      });
+    });
+
+    // SCROLL SUAVE
+    function smoothScrollTo(target) {
+      const el = document.querySelector(target);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+
+    document.querySelectorAll("[data-scroll]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-scroll");
+        smoothScrollTo(target);
+      });
+    });
+
+    // FILTROS
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const productCards = document.querySelectorAll(".card");
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        productCards.forEach((card) => {
+          const category = card.getAttribute("data-category") || "";
+          if (filter === "todos" || category.includes(filter)) {
+            card.style.display = "flex";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // WHATSAPP
+    function openWhatsApp(productName = "") {
+      const baseUrl = `https://wa.me/${WHATSAPP_NUMBER}`;
+      const text = productName
+        ? `Hola, me gustaría hacer un pedido en La Buena Miga. Estoy interesado en el producto "${productName}". ¿Podrían confirmarme disponibilidad y precio final, por favor?`
+        : `Hola, me gustaría hacer un pedido en La Buena Miga. ¿Podrían brindarme información sobre el catálogo y disponibilidad, por favor?`;
+      const url = `${baseUrl}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    }
+
+    document.querySelectorAll(".btn-card").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const producto = btn.getAttribute("data-producto") || "";
+        openWhatsApp(producto);
+      });
+    });
+
+    const whatsappMain = document.getElementById("whatsappMain");
+    whatsappMain.addEventListener("click", () => openWhatsApp());
+
+    // AÑO FOOTER
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
